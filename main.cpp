@@ -28,8 +28,7 @@ void encode(string in_name, string out_name){
             cout<<"th! file is empty!!!"<<endl;
         }
 
-        while(/*!in.eof()*/in.read((char *) &a, sizeof (a))){
-            //in.read((char *) &a, sizeof (a));
+        while(in.read((char *) &a, sizeof (a))){
             string cur(phrase.begin(), phrase.end());
             phrase.push_back(a);
             string tem(phrase.begin(), phrase.end());
@@ -75,14 +74,13 @@ void decode(string in_name, string out_name){
         while(in.read((char *) &h, sizeof (h))){
             if(table.size()<=h){
                 phrase+= phrase[0];
+                //out.write((char *) &phrase, sizeof (phrase));
                 out<<phrase;
                 if(exists.find(phrase) == exists.end()){
                     ++exists[phrase];
                     table.push_back(phrase);
                 }
-                cout<<"do "<<h<<" "<<table[h]<<" "<<phrase<<" "<<table.size()<<endl;
-                phrase = phrase[0];
-                cout<<"posle                                  "<<h<<" "<<table[h]<<" "<<phrase<<" "<<table.size()<<endl;
+                //phrase = phrase[0];
             }
             else{
                 //out.write((char *) &table[h], sizeof (table[h]));
@@ -92,11 +90,8 @@ void decode(string in_name, string out_name){
                     ++exists[phrase];
                     table.push_back(phrase);
                 }
-                cout<<"do "<<h<<" "<<table[h]<<" "<<phrase<<" "<<table.size()<<endl;
                 phrase = table[h];
-                cout<<"posle                                 "<<h<<" "<<table[h]<<" "<<phrase<<" "<<table.size()<<endl;
             }
-           // cout<<h<<" "<<table[h]<<" "<<phrase<<" "<<table.size()<<endl;
         }
 
     in.close();
@@ -113,5 +108,6 @@ int main()
     decode(out_name, "newout.txt");
 
     cout<<"ping"<<endl;
+    cout<<sizeof(char)<<endl;
     return 0;
 }
